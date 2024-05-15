@@ -1,12 +1,12 @@
 import 'package:delimeal_app/screens/favorites_screen.dart';
 // This file returns a widget that displays tabs at the bottom of the AppBar
 
+import '../models/meal.dart';
 import './categories_screen.dart';
 import 'package:flutter/material.dart';
 
-class TabsScreen extends StatefulWidget {
-  const TabsScreen({super.key});
-
+class TabsScreen extends StatefulWidget {final List<Meal> favoriteMeals;
+  const TabsScreen(this.favoriteMeals,{super.key});
   @override
   State<TabsScreen> createState() => _TabScreenState();
 }
@@ -26,7 +26,7 @@ class _TabScreenState extends State<TabsScreen> {
               ), Tab(icon: Icon(Icons.star),text: 'Favorites',)
             ]),
           ),
-          body: const TabBarView(children: [CategoriesScreen(),FavoritesScreen()]),
+          body:  TabBarView(children: [const  CategoriesScreen(),FavoritesScreen(widget.favoriteMeals)]),
         ));
   }
 }

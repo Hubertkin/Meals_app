@@ -27,6 +27,24 @@ class _MyAppState extends State<MyApp> {
     'vegetarian': false,
   };
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
+  
+  void toggleFavorites (String mealId)
+{
+  final existingIndex = _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+  if(existingIndex >= 0)
+  {
+    setState(() {
+      _favoriteMeals.removeAt(existingIndex);
+    });
+  }
+  else
+  {
+    setState(() {
+      _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+    });
+  }
+}
 
 
   void _setFilters(Map<String, bool> filteredData) {
@@ -73,7 +91,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute:
           '/', // default is '/' which can be changed to render a different home scrreen
       routes: {
-        '/': (context) => const TabsScreen(),
+        '/': (context) =>  TabsScreen(_favoriteMeals),
         CategoryMealScreen.routeName: (context) =>
             CategoryMealScreen(_availableMeals),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
