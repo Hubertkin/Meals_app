@@ -2,6 +2,9 @@ import 'package:delimeal_app/dummy_data.dart';
 import 'package:flutter/material.dart';
 
 class MealDetailScreen extends StatelessWidget {
+  final Function toggleFavorites;
+  final Function isMealFavorite;
+
   static const routeName = '/meal-details';
   Widget buildSectionTitle(BuildContext context, String title) {
     return Container(
@@ -28,7 +31,7 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
-  const MealDetailScreen({super.key});
+  const MealDetailScreen(this.isMealFavorite,this.toggleFavorites, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,32 +57,44 @@ class MealDetailScreen extends StatelessWidget {
                 itemBuilder: ((context, index) => Card(
                     color: Theme.of(context).colorScheme.secondary,
                     child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
                       child: Text(selectMeal.ingredients[index]),
                     ))),
                 itemCount: selectMeal.ingredients.length,
               ),
             ),
             buildSectionTitle(context, 'Steps'),
-            buildContainer(child: ListView.builder(itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      child: Text('# ${(index + 1)}'),
-                    ),
-                    title: Text(selectMeal.steps[index]),
-                  ),
-                  const Divider()
-                ],
-              );
-            }, itemCount: selectMeal.steps.length)),
+            buildContainer(
+                child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              child: Text('# ${(index + 1)}'),
+                            ),
+                            title: Text(selectMeal.steps[index]),
+                          ),
+                          const Divider()
+                        ],
+                      );
+                    },
+                    itemCount: selectMeal.steps.length)),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){Navigator.of(context).pop(mealId);}, child: const Icon(Icons.delete, color: Colors.black,),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => toggleFavorites(mealId)
+        // Navigator.of(context).pop(mealId); this was used for deletion logic
+        ,
+        child:  Icon(
+          isMealFavorite(mealId) ? Icons.star : Icons.star_border,
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }

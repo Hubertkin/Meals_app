@@ -9,7 +9,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeItem;
+  //final Function removeItem;
 
   const MealItem({
     required this.id,
@@ -18,7 +18,7 @@ class MealItem extends StatelessWidget {
     required this.duration,
     required this.complexity,
     required this.affordability,
-    required this.removeItem,
+   // required this.removeItem,
   });
   String get complexityText {
     switch (complexity) {
@@ -40,7 +40,14 @@ class MealItem extends StatelessWidget {
     Navigator.of(context).pushNamed(
       MealDetailScreen.routeName,
       arguments: id,
-    ).then((returnValue) => removeItem(returnValue));//this is a future that is returned when the screen is popped
+    ).then((returnValue) {
+      if (returnValue != null){
+        // removeItem(returnValue)
+      }
+   
+   }
+    
+   );//this is a future that is returned when the screen is popped
   }
 
   @override

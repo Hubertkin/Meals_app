@@ -54,7 +54,8 @@ List<Meal> displayedMeals = [];
               duration: displayedMeals[index].duration,
               complexity: displayedMeals[index].complexity,
               affordability: displayedMeals[index].affordability,
-              removeItem: _removeMeal),
+              //removeItem: _removeMeal
+              ),
           itemCount: displayedMeals.length,
         ));
   }
